@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
     result = result.limit(limit).skip(skip);
 
     const products = await result;
-    const resultAll = await Product.find(queryObject);
+    const resultAll = await Product.find({});
 
     return NextResponse.json({
       success: true,
