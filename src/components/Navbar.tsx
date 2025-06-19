@@ -12,16 +12,13 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link
-              href="/All-Products"
-              className="text-gray-300 hover:text-white"
-            >
-              All Products
+            <Link href="/Products" className="text-gray-300 hover:text-white">
+              Products
             </Link>
           </li>
           <li>
             <Link href="/Admin-Page" className="text-gray-300 hover:text-white">
-              Admin Page
+              Admin
             </Link>
           </li>
           <li>
