@@ -18,14 +18,20 @@ export async function getProducts(
     return data;
   } catch (error) {
     console.error("Error fetching products:", error);
-    throw new Error("Failed to fetch products");
+    return {
+      success: false,
+      msg: "Something Went Wrong Please Try Again!",
+    };
   }
 }
 
-export async function addNewProduct(formData: FormData) {
+export async function addNewProduct(
+  previousState: unknown,
+  formData: FormData
+) {
   try {
     const { data } = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/products/addProduct`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/products`,
       {
         productName: formData.get("productName"),
         dis: formData.get("dis"),
@@ -35,6 +41,10 @@ export async function addNewProduct(formData: FormData) {
     return data;
   } catch (error) {
     console.error("Error adding new product:", error);
-    throw new Error("Failed to add new product");
+    return {
+      success: false,
+      msg: "Something Went Wrong Please Try Again!",
+    };
+    // throw new Error("Failed to add new product");
   }
 }
