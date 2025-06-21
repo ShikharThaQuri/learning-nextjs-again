@@ -41,6 +41,27 @@ export async function getProductsUsingSearchQuery(
   }
 }
 
+export async function getProductById(
+  previousState: unknown,
+  formData: FormData
+) {
+  try {
+    const { data } = await axios.get(
+      `${
+        process.env.NEXT_PUBLIC_API_URL
+      }/api/common/products/getProductById?id=${formData.get("productId")}`
+    );
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching product by ID:", error);
+    return {
+      success: false,
+      msg: "Something Went Wrong Please Try Again!",
+    };
+  }
+}
+
 export async function addNewProduct(
   previousState: unknown,
   formData: FormData

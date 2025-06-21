@@ -61,9 +61,7 @@ export default function AddProduct() {
 
           <div className="text-right mt-[0.4rem] w-full">
             <h1
-              className={`${
-                data?.success ? "text-[#0077b6]" : "text-[#c1121f]"
-              } `}
+              className={`${data?.success ? "text-red-700" : "text-blue-700"} `}
             >
               {msg}
             </h1>

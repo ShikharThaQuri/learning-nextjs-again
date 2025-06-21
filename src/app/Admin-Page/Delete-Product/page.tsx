@@ -48,9 +48,7 @@ export default function DeleteProductPage() {
 
           <div className="text-right  w-full mt-[0.4rem]">
             <h1
-              className={`${
-                data?.success ? "text-[#0077b6]" : "text-[#c1121f]"
-              } `}
+              className={`${data?.success ? "text-red-700" : "text-blue-700"} `}
             >
               {msg}
             </h1>
