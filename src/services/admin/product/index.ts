@@ -109,3 +109,28 @@ export async function deleteProduct(
     };
   }
 }
+
+export async function updateProduct(
+  previousState: unknown,
+  formData: FormData
+) {
+  try {
+    const { data } = await axios.patch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/products?id=${formData.get(
+        "Id"
+      )}`,
+      {
+        productName: formData.get("productName"),
+        dis: formData.get("dis"),
+      }
+    );
+
+    return data;
+  } catch (error) {
+    console.error("Error updating product:", error);
+    return {
+      success: false,
+      msg: "Something Went Wrong Please Try Again!",
+    };
+  }
+}

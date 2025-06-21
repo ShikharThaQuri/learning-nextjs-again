@@ -1,8 +1,11 @@
+import connectDB from "@/db/connect";
 import Product from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    await connectDB();
+
     const searchQuery = req.nextUrl.searchParams;
     const productId = searchQuery.get("id");
 

@@ -7,7 +7,7 @@ export default function AdminSideNavbar() {
   const pathname = usePathname();
 
   return (
-    <div className="absolute top-0 bottom-0 left-0 bg-gray-800 text-white w-64 h-screen px-4 pt-10">
+    <div className="fixed top-0 bottom-0 left-0 bg-gray-800 text-white w-64 h-screen px-4 pt-10">
       <h2 className="text-xl mb-10">Admin Dashboard</h2>
       <ul className="space-y-2">
         <li>

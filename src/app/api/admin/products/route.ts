@@ -46,3 +46,36 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ success: false, msg: "Error Happend!", error });
   }
 }
+
+export async function PATCH(req: NextRequest) {
+  try {
+    await connectDB();
+
+    const data = await req.json();
+    const { searchParams } = req.nextUrl;
+    const productId = searchParams.get("id");
+
+    const result = await Product.findByIdAndUpdate(
+      { _id: productId },
+      {
+        productName: data.productName,
+        dis: data.dis,
+      },
+      { new: true }
+    );
+
+    if (!result) {
+      return NextResponse.json({
+        success: false,
+        msg: "something went wrong, please try again!",
+      });
+    }
+
+    return NextResponse.json({
+      success: true,
+      msg: "Successfully Updated a Product!",
+    });
+  } catch (error) {
+    return NextResponse.json({ success: false, msg: "Error Happend!", error });
+  }
+}

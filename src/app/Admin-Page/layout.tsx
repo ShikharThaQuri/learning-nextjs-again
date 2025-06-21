@@ -6,9 +6,9 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative pl-64">
+    <div>
       <AdminSideNavbar />
-      <main className="bg-gray-100 text-black h-screen">{children}</main>
+      <main className="bg-gray-100 text-black h-screen pl-64">{children}</main>
     </div>
   );
 }
