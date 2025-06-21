@@ -64,3 +64,27 @@ export async function addNewProduct(
     // throw new Error("Failed to add new product");
   }
 }
+
+export async function deleteProduct(
+  previousState: unknown,
+  formData: FormData
+) {
+  try {
+    const { data } = await axios.delete(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/products`,
+      {
+        data: {
+          _id: formData.get("productId"),
+        },
+      }
+    );
+
+    return data;
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    return {
+      success: false,
+      msg: "Something Went Wrong Please Try Again!",
+    };
+  }
+}

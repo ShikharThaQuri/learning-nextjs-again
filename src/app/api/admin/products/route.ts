@@ -23,3 +23,26 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, msg: "Error Happend!", error });
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  try {
+    await connectDB();
+
+    const data = await req.json();
+
+    const result = await Product.findByIdAndDelete(data._id);
+
+    if (!result) {
+      return NextResponse.json({
+        success: false,
+        msg: "Product not found!",
+      });
+    }
+    return NextResponse.json({
+      success: true,
+      msg: "Successfully Deleted a Product!",
+    });
+  } catch (error) {
+    return NextResponse.json({ success: false, msg: "Error Happend!", error });
+  }
+}

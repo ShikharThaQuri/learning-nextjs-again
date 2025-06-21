@@ -14,11 +14,11 @@ export default function AddProduct() {
   const [msg, setMsg] = useState<string>();
 
   useEffect(() => {
-    data?.success ? setMsg("") : setMsg(data?.msg);
+    setMsg(data?.msg);
 
     setTimeout(() => {
       setMsg("");
-    }, 3000);
+    }, 5000);
   }, [data]);
 
   return (
@@ -59,8 +59,14 @@ export default function AddProduct() {
             className={`w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200`}
           />
 
-          <div className="text-right  w-[50%]">
-            <h1 className="text-[#c1121f] text-[1.2rem]">{msg}</h1>
+          <div className="text-right mt-[0.4rem] w-full">
+            <h1
+              className={`${
+                data?.success ? "text-[#0077b6]" : "text-[#c1121f]"
+              } `}
+            >
+              {msg}
+            </h1>
           </div>
         </form>
       </div>
