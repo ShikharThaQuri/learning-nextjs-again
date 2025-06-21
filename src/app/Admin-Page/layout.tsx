@@ -1,4 +1,4 @@
-import Link from "next/link";
+import AdminSideNavbar from "./AdminSideNavbar";
 
 export default function AdminLayout({
   children,
@@ -6,13 +6,8 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <header className="h-[4rem] bg-gray-800 text-white px-[120px] flex items-center justify-between space-x-10">
-        <h1 className="text-xl">Admin Dashboard</h1>
-        <Link href="/" className="text-xl">
-          HOME
-        </Link>
-      </header>
+    <div className="relative pl-64">
+      <AdminSideNavbar />
       <main className="bg-gray-100 text-black h-screen">{children}</main>
     </div>
   );
