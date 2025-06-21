@@ -2,7 +2,23 @@
 
 import axios from "axios";
 
-export async function getProducts(
+export async function getProducts() {
+  try {
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/common/products/getProducts`
+    );
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return {
+      success: false,
+      msg: "Something Went Wrong Please Try Again!",
+    };
+  }
+}
+
+export async function getProductsUsingSearchQuery(
   productName: string,
   currentPage: string,
   limit: number,
