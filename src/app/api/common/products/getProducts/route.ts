@@ -30,11 +30,12 @@ export async function GET(req: NextRequest) {
     if (sort) {
       const sortList = sort.split(",").join(" ");
       result = result.sort(sortList);
-    } else {
-      result = result.sort("createAt");
     }
+    // else {
+    //   result = result.sort("createAt");
+    // }
 
-    const limit = Number(limitQuery);
+    const limit = Number(limitQuery) || 3;
     const page = Number(pageQuery) || 1;
     const skip = (page - 1) * limit;
 
