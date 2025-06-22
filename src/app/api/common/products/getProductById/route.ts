@@ -21,6 +21,6 @@ export async function GET(req: NextRequest) {
       product: result,
     });
   } catch (error) {
-    return NextResponse.json({ success: false, msg: "Error Happened" });
+    return NextResponse.json({ success: false, msg: "Error Happened", error });
   }
 }

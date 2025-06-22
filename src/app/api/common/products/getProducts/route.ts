@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     const pageQuery = searchQuery.get("page");
     const sort = searchQuery.get("sort");
 
-    let queryObject: queryObject = {} as queryObject;
+    const queryObject: queryObject = {} as queryObject;
 
     if (productNameQuery) {
       queryObject.productName = { $regex: productNameQuery, $options: "i" };

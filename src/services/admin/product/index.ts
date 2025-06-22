@@ -25,7 +25,7 @@ export async function getProductsUsingSearchQuery(
   price: number
 ) {
   try {
-    let getQuery = `?productName=${productName}&page=${currentPage}&limit=${limit}&sort=${price}`;
+    const getQuery = `?productName=${productName}&page=${currentPage}&limit=${limit}&sort=${price}`;
 
     const { data } = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/api/common/products/getProducts${getQuery}`

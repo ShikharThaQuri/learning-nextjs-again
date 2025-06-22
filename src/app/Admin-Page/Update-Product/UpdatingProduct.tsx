@@ -14,16 +14,12 @@ export default function UpdateProduct({
   const [msg, setMsg] = useState<string>();
 
   useEffect(() => {
-    data?.success
-      ? (setMsg(data?.msg),
-        setTimeout(() => {
-          setMsg("");
-          window.location.reload();
-        }, 5000))
-      : (setMsg(data?.msg),
-        setTimeout(() => {
-          setMsg("");
-        }, 7000));
+    setMsg(data?.msg);
+
+    setTimeout(() => {
+      setMsg("");
+      window.location.reload();
+    }, 5000);
   }, [data]);
 
   return (

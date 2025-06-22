@@ -12,7 +12,12 @@ export default function UpdataProductPage() {
 
   useEffect(() => {
     setMsg(data?.msg);
-    data?.success ? setShow(true) : setShow(false);
+
+    if (data?.success) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
 
     setTimeout(() => {
       setMsg("");

@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       msg: "Successfully Added a Product!",
+      product: result,
     });
   } catch (error) {
     return NextResponse.json({ success: false, msg: "Error Happend!", error });
@@ -41,6 +42,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({
       success: true,
       msg: "Successfully Deleted a Product!",
+      product: result,
     });
   } catch (error) {
     return NextResponse.json({ success: false, msg: "Error Happend!", error });
@@ -74,6 +76,7 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({
       success: true,
       msg: "Successfully Updated a Product!",
+      product: result,
     });
   } catch (error) {
     return NextResponse.json({ success: false, msg: "Error Happend!", error });
