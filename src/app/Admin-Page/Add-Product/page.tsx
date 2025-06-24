@@ -3,6 +3,8 @@
 import { addNewProduct } from "@/services/admin/product";
 import { useActionState, useEffect, useState } from "react";
 
+// import UploadIcon from "@mui/icons-material/Upload";
+
 const inputStyle =
   "w-full px-3 py-2 mb-[1rem] border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500";
 
@@ -53,6 +55,37 @@ export default function AddProduct() {
             />
           </div>
 
+          <div className="flex flex-col w-full text-left ">
+            <label className={`${labelStyle}`} htmlFor="price">
+              Price
+            </label>
+            <input
+              type="number"
+              name="price"
+              required
+              placeholder="Enter Product Price"
+              className={`${inputStyle}`}
+            />
+          </div>
+
+          <div className="text-center my-[3rem] tablet:flex tablet:flex-col tablet:gap-y-[2rem] tablet:items-center">
+            <input
+              // className="hidden"
+              type="file"
+              name="file"
+              id="uploadImg"
+              accept="image/*"
+              required
+              hidden
+            />
+            <label
+              htmlFor="uploadImg"
+              className={`cursor-pointer bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200`}
+            >
+              Upload Image
+            </label>
+          </div>
+
           <input
             disabled={isPending}
             type="submit"
@@ -61,7 +94,7 @@ export default function AddProduct() {
 
           <div className="text-right mt-[0.4rem] w-full">
             <h1
-              className={`${data?.success ? "text-red-700" : "text-blue-700"} `}
+              className={`${data?.success ? "text-blue-700" : "text-red-700"} `}
             >
               {msg}
             </h1>

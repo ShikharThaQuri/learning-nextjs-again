@@ -71,6 +71,8 @@ export async function addNewProduct(
       {
         productName: formData.get("productName"),
         dis: formData.get("dis"),
+        price: formData.get("price"),
+        image_Url: formData.get("file"),
       }
     );
 

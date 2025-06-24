@@ -1,16 +1,33 @@
 import connectDB from "@/db/connect";
 import Product from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";
+import { UploadImage } from "@/lib/cloudinary/upload_image";
 
 export async function POST(req: NextRequest) {
   try {
     await connectDB();
 
     const data = await req.json();
+    const image = data.image_Url;
+
+    const bytes = await image.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const imageData = await UploadImage(buffer);
+
+    if (!imageData) {
+      return NextResponse.json({
+        success: false,
+        msg: "Image upload failed!",
+      });
+    }
 
     const newProduct = new Product({
       productName: data.productName,
       dis: data.dis,
+      price: data.price,
+      image_Url: imageData.secure.url,
+      public_id: imageData.public_id,
     });
 
     const result = await newProduct.save({});

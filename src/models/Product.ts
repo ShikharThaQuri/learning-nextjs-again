@@ -4,6 +4,9 @@ const productSchema = new mongoose.Schema(
   {
     productName: String,
     dis: String,
+    price: Number,
+    image_Url: String,
+    public_id: String,
     like: [
       {
         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
