@@ -16,11 +16,12 @@ export function SearchBar() {
     } else {
       params.delete("productName");
     }
+
     replace(`${pathname}?${params}`);
   }, 100);
 
   return (
-    <div className="flex items-center justify-center my-10">
+    <div className="flex items-center justify-center my-10 z-10">
       <input
         type="text"
         placeholder="Search products..."
