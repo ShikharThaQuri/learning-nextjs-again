@@ -8,12 +8,8 @@ export async function POST(req: NextRequest) {
     await connectDB();
 
     const data = await req.json();
-    const image = data.image_Url;
 
-    const bytes = await image.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    const imageData = await UploadImage(buffer);
+    const imageData = await UploadImage(data.imageUrl);
 
     if (!imageData) {
       return NextResponse.json({

@@ -1,6 +1,7 @@
 "use server";
 
 import axios from "axios";
+import { headers } from "next/headers";
 
 export async function getProducts() {
   try {
@@ -66,13 +67,21 @@ export async function addNewProduct(
   formData: FormData
 ) {
   try {
+    const image = formData.get("file") as File;
+
+    const bytes = await image.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
     const { data } = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/api/admin/products`,
       {
         productName: formData.get("productName"),
         dis: formData.get("dis"),
         price: formData.get("price"),
-        image_Url: formData.get("file"),
+        imageUrl: buffer,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
       }
     );
 
