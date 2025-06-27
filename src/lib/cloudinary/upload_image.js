@@ -1,8 +1,8 @@
 import cloudinary from "./cloudinary";
 
 export const UploadImage = async (buffer) => {
-  return new Promise(async (resolve, reject) => {
-    await cloudinary.uploader
+  return await new Promise(async (resolve, reject) => {
+    cloudinary.uploader
       .upload_stream(
         {
           resource_type: "auto",

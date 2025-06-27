@@ -1,6 +1,7 @@
 "use server";
 
 import axios from "axios";
+import { log } from "console";
 import { headers } from "next/headers";
 
 export async function getProducts() {
@@ -67,21 +68,22 @@ export async function addNewProduct(
   formData: FormData
 ) {
   try {
-    const image = formData.get("file") as File;
+    const productName = formData.get("productName") as string;
+    const dis = formData.get("dis") as string;
+    const price = formData.get("price") as string;
+    const file = formData.get("file") as File;
 
-    const bytes = await image.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    const Data = new FormData();
+    Data.set("productName", productName);
+    Data.set("dis", dis);
+    Data.set("price", price);
+    Data.set("file", file);
 
     const { data } = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/api/admin/products`,
+      Data,
       {
-        productName: formData.get("productName"),
-        dis: formData.get("dis"),
-        price: formData.get("price"),
-        imageUrl: buffer,
-      },
-      {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "multipart/form-data" },
       }
     );
 

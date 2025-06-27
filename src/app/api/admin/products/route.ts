@@ -1,15 +1,45 @@
 import connectDB from "@/db/connect";
 import Product from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";
-import { UploadImage } from "@/lib/cloudinary/upload_image";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+interface CloudinaryUploadResult {
+  public_id: string;
+  [key: string]: any;
+}
 
 export async function POST(req: NextRequest) {
   try {
     await connectDB();
 
-    const data = await req.json();
+    const data = await req.formData();
 
-    const imageData = await UploadImage(data.imageUrl);
+    const image = data.get("file") as File;
+
+    const bytes = await image.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const imageData = await new Promise<CloudinaryUploadResult>(
+      (resolve, reject) => {
+        const uploadstream = cloudinary.uploader.upload_stream(
+          { folder: "products" },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result as CloudinaryUploadResult);
+            }
+          }
+        );
+        uploadstream.end(buffer);
+      }
+    );
 
     if (!imageData) {
       return NextResponse.json({
@@ -19,10 +49,10 @@ export async function POST(req: NextRequest) {
     }
 
     const newProduct = new Product({
-      productName: data.productName,
-      dis: data.dis,
-      price: data.price,
-      image_Url: imageData.secure.url,
+      productName: data.get("productName"),
+      dis: data.get("dis"),
+      price: data.get("price"),
+      image_Url: imageData.secure_url,
       public_id: imageData.public_id,
     });
 
@@ -34,6 +64,7 @@ export async function POST(req: NextRequest) {
       product: result,
     });
   } catch (error) {
+    console.error("Error in POST:", error);
     return NextResponse.json({ success: false, msg: "Error Happend!", error });
   }
 }
