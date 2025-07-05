@@ -1,6 +1,8 @@
 import { getProducts } from "@/services/admin/product";
 import type { ProductType } from "@/models/Product";
 
+export const revalidate = 5; // Revalidate every 60 seconds
+
 export default async function ProductsBox() {
   const result = await getProducts();
 

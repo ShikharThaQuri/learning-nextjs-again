@@ -4,9 +4,16 @@ import axios from "axios";
 
 export async function getProducts() {
   try {
-    const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/common/products/getProducts`
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/common/products/getProducts`,
+      {
+        method: "GET",
+        cache: "force-cache",
+        next: { revalidate: 5 },
+      }
     );
+
+    const data = await res.json();
 
     return data;
   } catch (error) {
