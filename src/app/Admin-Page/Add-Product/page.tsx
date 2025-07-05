@@ -68,22 +68,20 @@ export default function AddProduct() {
             />
           </div>
 
-          <div className="text-center my-[3rem] tablet:flex tablet:flex-col tablet:gap-y-[2rem] tablet:items-center">
+          <div className="mb-[3rem] tablet:flex tablet:flex-col tablet:gap-y-[2rem] tablet:items-center">
+            <label className={`${labelStyle}`} htmlFor="price">
+              Upload File
+            </label>
             <input
-              // className="hidden"
               type="file"
               name="file"
               id="uploadImg"
               accept="image/*"
               required
-              hidden
+              className={`border border-gray-300 rounded w-full
+              file:px-3 file:py-2 file:text-[1rem] file:mr-[1rem] file:bg-[#d4a373] file:text-xs file:text-black
+              hover:file:cursor-pointer`}
             />
-            <label
-              htmlFor="uploadImg"
-              className={`cursor-pointer bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200`}
-            >
-              Upload Image
-            </label>
           </div>
 
           <input
