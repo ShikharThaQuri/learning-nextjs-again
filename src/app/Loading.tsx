@@ -3,12 +3,14 @@ import Image from "next/image";
 
 export default function Loading() {
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-gray-100 text-black px-[120px] pb-10">
-      <div className="max-w-xl bg-white rounded-lg shadow-md">
+    <section className="grid justify-center grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 text-black">
+      <div className="max-w-xs bg-white rounded-lg shadow-md hover:scale-105 transition-transform duration-300">
         <Image
           src={firstImage}
           alt={"firstImage"}
-          className="w-full h-48 object-cover"
+          width={500}
+          height={500}
+          className="w-full h-38 object-cover"
         />
         <div className="p-4">
           <h2 className="text-xl font-semibold">loading...</h2>

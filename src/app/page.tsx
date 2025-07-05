@@ -3,14 +3,11 @@ import Navbar from "@/components/Navbar";
 import HeroImage from "@/images/bg-image.jpeg";
 import Image from "next/image";
 import { HomePageSearchBar } from "./HomePageSearchBar";
-import { ProductBox } from "@/components/productBox";
-import { getProductsUsingSearchQuery } from "@/services/admin/product";
 import { Suspense } from "react";
 import Loading from "./Loading";
+import HomeProducts from "./HomePageProduct";
 
 export default async function Home() {
-  const result = await getProductsUsingSearchQuery("Product", 1, 5);
-
   return (
     <div className="bg-gray-100 pb-[2rem] text-black">
       <Navbar />
@@ -32,7 +29,7 @@ export default async function Home() {
         <h1 className="text-3xl font-bold text-center mb-6">Products</h1>
         <div className="mx-[100px] px-[20px] py-[2rem] bg-[#e9edc9] rounded-lg shadow-md">
           <Suspense fallback={<Loading />}>
-            <ProductBox data={result} />
+            <HomeProducts />
           </Suspense>
         </div>
       </section>
