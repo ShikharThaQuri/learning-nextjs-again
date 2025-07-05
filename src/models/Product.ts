@@ -28,4 +28,7 @@ export type ProductType = {
   like: { userId: string }[];
   createdAt?: Date;
   updatedAt?: Date;
+  price: number;
+  image_Url: string;
+  public_id: string;
 };

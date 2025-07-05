@@ -20,8 +20,10 @@ export async function ProductBox({ data }: { data: dataType }) {
           className="max-w-xs bg-white rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
         >
           <Image
-            src={firstImage}
+            src={items.image_Url || firstImage}
             alt={"firstImage"}
+            width={500}
+            height={500}
             className="w-full h-38 object-cover"
           />
           <div className="p-4">

@@ -1,8 +1,6 @@
 "use server";
 
 import axios from "axios";
-import { log } from "console";
-import { headers } from "next/headers";
 
 export async function getProducts() {
   try {
