@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
     //   result = result.sort("createAt");
     // }
 
-    const limit = Number(limitQuery);
+    const limit = Number(limitQuery) || 50;
     const page = Number(pageQuery) || 1;
     const skip = (page - 1) * limit;
 

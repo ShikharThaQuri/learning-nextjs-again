@@ -3,8 +3,6 @@
 import { addNewProduct } from "@/services/admin/product";
 import { useActionState, useEffect, useState } from "react";
 
-// import UploadIcon from "@mui/icons-material/Upload";
-
 const inputStyle =
   "w-full px-3 py-2 mb-[1rem] border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500";
 

@@ -8,8 +8,8 @@ export async function getProducts() {
       `${process.env.NEXT_PUBLIC_API_URL}/api/common/products/getProducts`,
       {
         method: "GET",
-        cache: "force-cache",
-        next: { revalidate: 5 },
+        // cache: "force-cache",
+        // next: { revalidate: 5 },
       }
     );
 
@@ -132,14 +132,22 @@ export async function updateProduct(
   formData: FormData
 ) {
   try {
+    const productName = formData.get("productName") as string;
+    const dis = formData.get("dis") as string;
+    const price = formData.get("price") as string;
+    const file = formData.get("file") as File;
+
+    const Data = new FormData();
+    Data.set("productName", productName);
+    Data.set("dis", dis);
+    Data.set("price", price);
+    Data.set("file", file);
+
     const { data } = await axios.patch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/admin/products?id=${formData.get(
         "Id"
       )}`,
-      {
-        productName: formData.get("productName"),
-        dis: formData.get("dis"),
-      }
+      Data
     );
 
     return data;

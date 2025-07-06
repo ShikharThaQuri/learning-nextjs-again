@@ -3,6 +3,11 @@
 import { updateProduct } from "@/services/admin/product";
 import { useActionState, useEffect, useState } from "react";
 
+const inputStyle =
+  "w-full px-3 py-2 mb-[1rem] border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500";
+
+const labelStyle = "block text-sm font-medium text-gray-700 mb-2";
+
 export default function UpdateProduct({
   id,
   productName,
@@ -18,7 +23,6 @@ export default function UpdateProduct({
 
     setTimeout(() => {
       setMsg("");
-      window.location.reload();
     }, 5000);
   }, [data]);
 
@@ -63,10 +67,43 @@ export default function UpdateProduct({
             placeholder="Enter Updated Discricption"
           />
         </div>
+
+        <div className="flex flex-col w-full text-left ">
+          <label className={`${labelStyle}`} htmlFor="price">
+            Price
+          </label>
+          <input
+            type="number"
+            name="price"
+            required
+            placeholder="Enter Product Price"
+            className={`${inputStyle}`}
+          />
+        </div>
+
+        <div className="mb-[3rem] tablet:flex tablet:flex-col tablet:gap-y-[2rem] tablet:items-center">
+          <label className={`${labelStyle}`} htmlFor="price">
+            Upload File
+          </label>
+          <input
+            type="file"
+            name="file"
+            id="uploadImg"
+            accept="image/*"
+            required
+            className={`border border-gray-300 rounded w-full
+              file:px-3 file:py-2 file:text-[1rem] file:mr-[1rem] file:bg-[#d4a373] file:text-xs file:text-black
+              hover:file:cursor-pointer`}
+          />
+        </div>
+
         <button
           disabled={isPending}
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
+          onClick={(e) =>
+            isPending ? window.location.reload() : setMsg("Waitig...")
+          }
         >
           Update Product
         </button>

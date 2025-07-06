@@ -1,18 +1,7 @@
 import connectDB from "@/db/connect";
+import { UploadImage } from "@/lib/cloudinary/upload_image";
 import Product from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";
-import { v2 as cloudinary } from "cloudinary";
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-interface CloudinaryUploadResult {
-  public_id: string;
-  secure_url: string;
-}
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,21 +14,7 @@ export async function POST(req: NextRequest) {
     const bytes = await image.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const imageData = await new Promise<CloudinaryUploadResult>(
-      (resolve, reject) => {
-        const uploadstream = cloudinary.uploader.upload_stream(
-          { folder: "products" },
-          (error, result) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(result as CloudinaryUploadResult);
-            }
-          }
-        );
-        uploadstream.end(buffer);
-      }
-    );
+    const imageData = await UploadImage(buffer);
 
     if (!imageData) {
       return NextResponse.json({
@@ -97,15 +72,25 @@ export async function PATCH(req: NextRequest) {
   try {
     await connectDB();
 
-    const data = await req.json();
+    const formData = await req.formData();
     const { searchParams } = req.nextUrl;
     const productId = searchParams.get("id");
+
+    const image = formData.get("file") as File;
+
+    const bytes = await image.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const imageData = await UploadImage(buffer);
 
     const result = await Product.findByIdAndUpdate(
       { _id: productId },
       {
-        productName: data.productName,
-        dis: data.dis,
+        productName: formData.get("productName"),
+        dis: formData.get("dis"),
+        price: formData.get("price"),
+        image_Url: imageData.secure_url,
+        public_id: imageData.public_id,
       },
       { new: true }
     );

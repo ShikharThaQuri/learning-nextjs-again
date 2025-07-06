@@ -5,7 +5,8 @@ import Image from "next/image";
 import { HomePageSearchBar } from "./HomePageSearchBar";
 import { Suspense } from "react";
 import Loading from "./Loading";
-import HomeProducts from "./HomePageProduct";
+import { ProductBox } from "@/components/productBox";
+import { getProductsUsingSearchQuery } from "@/services/admin/product";
 
 export default async function Home() {
   return (
@@ -38,5 +39,15 @@ export default async function Home() {
         <h1>Hello World</h1>
       </section>
     </div>
+  );
+}
+
+async function HomeProducts() {
+  const result = await getProductsUsingSearchQuery("Product", 1, 5);
+
+  return (
+    <>
+      <ProductBox data={result} />
+    </>
   );
 }

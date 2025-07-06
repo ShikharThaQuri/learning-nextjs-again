@@ -20,7 +20,7 @@ export function Pagination({ data }: { data: dataType }) {
 
   const currentPage = Number(searchParams.get("page")) || 1;
   const totalItems = data.totalProducts;
-  const totalPage = Math.ceil(totalItems / 3);
+  const totalPage = Math.ceil(totalItems / 10);
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams.toString());
