@@ -5,11 +5,11 @@ import axios from "axios";
 export async function getProducts() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/common/products/getProducts`,
+      `http://localhost:3000/api/common/products/getProducts`,
       {
         method: "GET",
-        // cache: "force-cache",
-        // next: { revalidate: 5 },
+        cache: "force-cache",
+        next: { revalidate: 5 },
       }
     );
 
@@ -17,7 +17,7 @@ export async function getProducts() {
 
     return data;
   } catch (error) {
-    console.error("Error fetching products:", error);
+    console.error("Error fetching All products:", error);
     return {
       success: false,
       msg: "Something Went Wrong Please Try Again!",
@@ -33,9 +33,15 @@ export async function getProductsUsingSearchQuery(
   try {
     const getQuery = `?productName=${productName}&page=${currentPage}&limit=${limit}`;
 
-    const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/common/products/getProducts${getQuery}`
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/common/products/getProducts${getQuery}`,
+      {
+        method: "GET",
+        cache: "force-cache",
+        next: { revalidate: 3 },
+      }
     );
+    const data = await res.json();
 
     return data;
   } catch (error) {

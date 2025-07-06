@@ -101,9 +101,7 @@ export default function UpdateProduct({
           disabled={isPending}
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
-          onClick={(e) =>
-            isPending ? window.location.reload() : setMsg("Waitig...")
-          }
+          onClick={() => (isPending ? "" : setMsg("Waitig..."))}
         >
           Update Product
         </button>
