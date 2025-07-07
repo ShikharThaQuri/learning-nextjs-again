@@ -8,6 +8,8 @@ const inputStyle =
 
 const labelStyle = "block text-sm font-medium text-gray-700 mb-2";
 
+// const msg = "";
+
 export default function AddProduct() {
   const [data, action, isPending] = useActionState(addNewProduct, undefined);
 
@@ -92,7 +94,7 @@ export default function AddProduct() {
             <h1
               className={`${data?.success ? "text-blue-700" : "text-red-700"} `}
             >
-              {msg}
+              {isPending ? "waiting..." : msg}
             </h1>
           </div>
         </form>

@@ -1,15 +1,16 @@
 "use server";
 
 import axios from "axios";
+import { revalidateTag } from "next/cache";
 
 export async function getProducts() {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/common/products/getProducts`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/common/products/getProducts`,
       {
         method: "GET",
         cache: "force-cache",
-        next: { revalidate: 5 },
+        next: { tags: ["getAllProducts"] },
       }
     );
 
@@ -38,7 +39,7 @@ export async function getProductsUsingSearchQuery(
       {
         method: "GET",
         cache: "force-cache",
-        next: { revalidate: 3 },
+        next: { tags: ["getProductUsingQuery"] },
       }
     );
     const data = await res.json();
@@ -79,6 +80,9 @@ export async function addNewProduct(
   formData: FormData
 ) {
   try {
+    revalidateTag("getAllProducts");
+    revalidateTag("getProductUsingQuery");
+
     const productName = formData.get("productName") as string;
     const dis = formData.get("dis") as string;
     const price = formData.get("price") as string;
@@ -114,6 +118,9 @@ export async function deleteProduct(
   formData: FormData
 ) {
   try {
+    revalidateTag("getAllProducts");
+    revalidateTag("getProductUsingQuery");
+
     const { data } = await axios.delete(
       `${process.env.NEXT_PUBLIC_API_URL}/api/admin/products`,
       {
@@ -138,6 +145,9 @@ export async function updateProduct(
   formData: FormData
 ) {
   try {
+    revalidateTag("getAllProducts");
+    revalidateTag("getProductUsingQuery");
+
     const productName = formData.get("productName") as string;
     const dis = formData.get("dis") as string;
     const price = formData.get("price") as string;
