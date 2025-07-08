@@ -1,4 +1,5 @@
 import connectDB from "@/db/connect";
+import { deleteImage } from "@/lib/cloudinary/deleteImage";
 import { UploadImage } from "@/lib/cloudinary/upload_image";
 import Product from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";
@@ -58,6 +59,9 @@ export async function DELETE(req: NextRequest) {
         msg: "Product not found!",
       });
     }
+
+    await deleteImage(data.Public_id);
+
     return NextResponse.json({
       success: true,
       msg: "Successfully Deleted a Product!",
@@ -80,6 +84,15 @@ export async function PATCH(req: NextRequest) {
 
     const bytes = await image.arrayBuffer();
     const buffer = Buffer.from(bytes);
+
+    const findImage = await Product.findById(productId);
+    if (!findImage) {
+      return NextResponse.json({
+        success: false,
+        msg: "Product not found!",
+      });
+    }
+    await deleteImage(findImage.Public_id);
 
     const imageData = await UploadImage(buffer);
 

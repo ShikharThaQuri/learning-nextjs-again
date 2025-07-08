@@ -59,11 +59,16 @@ export async function getProductById(
   formData: FormData
 ) {
   try {
-    const { data } = await axios.get(
+    const res = await fetch(
       `${
         process.env.NEXT_PUBLIC_API_URL
-      }/api/common/products/getProductById?id=${formData.get("productId")}`
+      }/api/common/products/getProductById?id=${formData.get("productId")}`,
+      {
+        method: "GET",
+      }
     );
+
+    const data = await res.json();
 
     return data;
   } catch (error) {

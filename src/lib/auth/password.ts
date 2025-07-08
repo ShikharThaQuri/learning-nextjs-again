@@ -1,0 +1,29 @@
+// import cookie from "cookie";
+// import jwt from "jsonwebtoken";
+import crypto from "crypto";
+
+// const secret = process.env.Priveate_Key;
+
+export function genHashPassword(password: string) {
+  const salt = crypto.randomBytes(32).toString("hex");
+  const hash = crypto
+    .pbkdf2Sync(password, salt, 10000, 64, "sha512")
+    .toString("hex");
+
+  return {
+    hash,
+    salt,
+  };
+}
+
+export function verifyHashPassword(
+  password: string,
+  hash: string,
+  salt: string
+) {
+  const valHash = crypto
+    .pbkdf2Sync(password, salt, 1000, 64, "sha512")
+    .toString("hex");
+
+  return valHash === hash;
+}

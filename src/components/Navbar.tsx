@@ -26,6 +26,11 @@ export default function Navbar() {
               Admin
             </Link>
           </li>
+          <li>
+            <Link href="/LoginPage" className="text-gray-300 hover:text-white">
+              Login/Register
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>

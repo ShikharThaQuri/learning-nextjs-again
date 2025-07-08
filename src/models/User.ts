@@ -12,9 +12,13 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    password: {
+    hash: {
       type: String,
       required: true,
+    },
+    salt: {
+      type: String,
+      require: true,
     },
     profilePicture: {
       type: String,
@@ -32,7 +36,8 @@ export type UserType = {
   _id: string;
   username: string;
   email: string;
-  password: string;
+  hash: string;
+  salt: string;
   profilePicture?: string;
   createdAt?: Date;
   updatedAt?: Date;
