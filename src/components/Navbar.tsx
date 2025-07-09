@@ -27,7 +27,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/LoginPage" className="text-gray-300 hover:text-white">
+            <Link href="/Login" className="text-gray-300 hover:text-white">
               Login/Register
             </Link>
           </li>
