@@ -1,36 +1,27 @@
-import cookie from "cookie";
+import { jwtVerify } from "jose";
 import jwt from "jsonwebtoken";
-import { UserType } from "@/models/User";
 
-export function issueCookie(user: UserType) {
-  const MaxAge = 1000 * 60 * 60 * 24 * 7; // 7 days
-
-  const payload = {
-    id: user._id,
-    email: user.email,
-    username: user.username,
-    iat: Date.now(),
-  };
-
-  const token = jwt.sign(payload, process.env.SECRET_KEY as string, {
-    expiresIn: MaxAge,
-  });
-
-  const serializedCookie = cookie.serialize("session", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: MaxAge,
-    sameSite: "strict",
-    path: "/",
-  });
-
-  return { serializedCookie };
-}
+const secretKey = process.env.SECRET_KEY;
+const encodedKey = new TextEncoder().encode(secretKey);
 
 export function verifyCookie(token: string | undefined = "") {
   try {
-    const decoded = jwt.verify(token, process.env.SECRET_KEY as string);
+    const decoded = jwt.verify(token, "shikhar123");
+    console.log("Decoded JWT:", decoded);
+
     return decoded;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function decrypt(token: string | undefined = "") {
+  try {
+    const { payload } = await jwtVerify(token, encodedKey, {
+      algorithms: ["HS256"],
+    });
+
+    return payload;
   } catch (error) {
     return null;
   }

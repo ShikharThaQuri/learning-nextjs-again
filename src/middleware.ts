@@ -11,23 +11,23 @@ const portectedRoutes = [
 const publicRoutes = ["/Login", "/Register"];
 
 export default async function middleware(req: NextRequest) {
-  // const path = req.nextUrl.pathname;
-  // const isProtectedRoute = portectedRoutes.includes(path);
-  // const isPublicRoute = publicRoutes.includes(path);
+  const path = req.nextUrl.pathname;
+  const isProtectedRoute = portectedRoutes.includes(path);
+  const isPublicRoute = publicRoutes.includes(path);
 
-  // const token = (await cookies()).get("session")?.value || "";
+  const token = (await cookies()).get("session")?.value || "";
 
-  // // console.log(`Token: ${token}`);
+  const session = verifyCookie(token);
 
-  // const session = verifyCookie(token);
+  // console.log("session-Check", session);
 
-  // if (isProtectedRoute && !session) {
-  //   return NextResponse.redirect(new URL("/Login", req.url));
-  // }
+  if (isProtectedRoute && !session) {
+    return NextResponse.redirect(new URL("/Login", req.url));
+  }
 
-  // if (isPublicRoute && session) {
-  //   return NextResponse.redirect(new URL("/Admin-Page", req.url));
-  // }
+  if (isPublicRoute && session) {
+    return NextResponse.redirect(new URL("/Admin-Page", req.url));
+  }
 
   return NextResponse.next();
 }
