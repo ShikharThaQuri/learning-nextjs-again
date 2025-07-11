@@ -2,10 +2,15 @@
 
 import { loginUser } from "@/services/auth";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useActionState } from "react";
 
 export default function Login() {
   const [data, action, isPending] = useActionState(loginUser, undefined);
+
+  if (data?.success == true) {
+    redirect("/Admin-Page");
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

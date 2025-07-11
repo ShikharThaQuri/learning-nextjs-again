@@ -1,6 +1,5 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { verifyCookie } from "./lib/auth/session";
+import { decrypt } from "@/lib/auth/session";
 
 const portectedRoutes = [
   "/Admin-Page",
@@ -12,20 +11,19 @@ const publicRoutes = ["/Login", "/Register"];
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
+  let cookie = req.cookies.get("session");
   const isProtectedRoute = portectedRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
 
-  const token = (await cookies()).get("session")?.value || "";
+  const token = cookie?.value as string;
 
-  const session = verifyCookie(token);
+  const decoded = await decrypt(token);
 
-  // console.log("session-Check", session);
-
-  if (isProtectedRoute && !session) {
+  if (isProtectedRoute && !decoded) {
     return NextResponse.redirect(new URL("/Login", req.url));
   }
 
-  if (isPublicRoute && session) {
+  if (isPublicRoute && decoded) {
     return NextResponse.redirect(new URL("/Admin-Page", req.url));
   }
 

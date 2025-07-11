@@ -1,12 +1,7 @@
 import connectDB from "@/db/connect";
 import User from "@/models/User";
-import {
-  createSession,
-  encrypt,
-  issueCookie,
-  verifyHashPassword,
-} from "@/lib/auth/password";
-import { cookies } from "next/headers";
+import { verifyHashPassword } from "@/lib/auth/password";
+import { createSession } from "@/lib/auth/session";
 
 export async function POST(req: Request) {
   try {
@@ -39,9 +34,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const serializedCookie = await createSession(user);
-
-    console.log("hello", serializedCookie);
+    const { serializedCookie } = await createSession(user);
 
     return Response.json(
       {
@@ -51,7 +44,7 @@ export async function POST(req: Request) {
       },
       {
         headers: {
-          "Set-Cookie": serializedCookie,
+          "set-Cookie": serializedCookie,
         },
       }
     );
