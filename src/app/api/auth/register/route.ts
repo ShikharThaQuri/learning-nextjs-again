@@ -1,5 +1,6 @@
 import connectDB from "@/db/connect";
-import { genHashPassword, issueCookie } from "@/lib/auth/password";
+import { genHashPassword } from "@/lib/auth/password";
+import { createSession } from "@/lib/auth/session";
 import User from "@/models/User";
 
 export async function POST(req: Request) {
@@ -27,21 +28,17 @@ export async function POST(req: Request) {
 
     const result = await User.create(user);
 
-    const { serializedCookie } = issueCookie(result);
+    const token = createSession(result);
 
-    return Response.json(
-      {
-        message: "User created successfully",
-        result,
-      },
-      {
-        headers: {
-          "Set-Cookie": serializedCookie,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    return Response.json({
+      message: "User created successfully",
+      result,
+      session: token,
+    });
   } catch (error) {
-    return new Response("Internal Server Error", { status: 500 });
+    return Response.json(
+      { msg: "Internal Server Error", error },
+      { status: 500 }
+    );
   }
 }

@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { useActionState } from "react";
 
 export default function Login() {
-  const [data, action, isPending] = useActionState(loginUser, undefined);
+  const [data, action] = useActionState(loginUser, undefined);
 
   if (data?.success == true) {
     redirect("/Admin-Page");
@@ -57,7 +57,7 @@ export default function Login() {
         )}
 
         <p className="mt-4 text-sm text-center text-gray-500">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link href="/Register" className="text-blue-500 hover:underline">
             Register here
           </Link>

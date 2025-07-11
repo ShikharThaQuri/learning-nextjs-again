@@ -1,13 +1,10 @@
 import { UserType } from "@/models/User";
-import cookie from "cookie";
 import { jwtVerify, SignJWT } from "jose";
 
 const secretKey = process.env.SECRET_KEY as string;
 const encodedKey = new TextEncoder().encode(secretKey);
 
 export async function createSession(user: UserType) {
-  const MaxAge = 1000 * 60 * 60 * 24 * 7;
-
   const payload = {
     sub: user?._id,
     username: user?.username,
@@ -17,15 +14,7 @@ export async function createSession(user: UserType) {
 
   const token = await encrypt(payload);
 
-  const serializedCookie = cookie.serialize("session", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: MaxAge,
-    sameSite: "strict",
-    path: "/",
-  });
-
-  return { serializedCookie };
+  return token;
 }
 
 type SessionPayload = {
@@ -51,6 +40,7 @@ export async function decrypt(session: string) {
 
     return payload;
   } catch (error) {
+    console.log(error);
     return null;
   }
 }

@@ -1,5 +1,7 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 export async function registerUser(previousState: unknown, formData: FormData) {
   try {
     const res = await fetch(
@@ -14,7 +16,11 @@ export async function registerUser(previousState: unknown, formData: FormData) {
       }
     );
 
-    return await res.json();
+    const data = await res.json();
+    const cookieStore = await cookies();
+    cookieStore.set("session", data?.session);
+
+    return data;
   } catch (error) {
     return {
       success: false,
@@ -42,6 +48,9 @@ export async function loginUser(previousState: unknown, formData: FormData) {
     );
 
     const data = await res.json();
+
+    const cookieStore = await cookies();
+    cookieStore.set("session", data?.session);
 
     return data;
   } catch (error) {

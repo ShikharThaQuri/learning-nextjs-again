@@ -34,20 +34,14 @@ export async function POST(req: Request) {
       );
     }
 
-    const { serializedCookie } = await createSession(user);
+    const serializedCookie = await createSession(user);
 
-    return Response.json(
-      {
-        success: true,
-        message: "Login successful",
-        user: { email },
-      },
-      {
-        headers: {
-          "set-Cookie": serializedCookie,
-        },
-      }
-    );
+    return Response.json({
+      success: true,
+      message: "Login successful",
+      user: { email },
+      session: serializedCookie,
+    });
   } catch (error) {
     return Response.json(
       { success: false, msg: "Internal Server Error", error },
