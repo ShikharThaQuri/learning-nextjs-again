@@ -36,7 +36,7 @@ export default async function Home() {
       </section>
 
       <section className="py-[2rem] text-center">
-        <h1>Hello World {process.env.NEXT_PUBLIC_API_URL} </h1>
+        <h1>Hello World {process.env.NEXT_PUBLIC_API_URL} hello 2 </h1>
       </section>
     </div>
   );
